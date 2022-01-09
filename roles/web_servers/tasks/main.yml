@@ -2,15 +2,15 @@
    tags: apache,apache2,centos,httpd,ubuntu
    package:
      name:
-       - "Template:Apache package name"
-       - "Template:Php package name"
+       - "{{ apache_package_name }}"
+       - "{{ php_package_name }}"
      state: latest
    when: ansible_distribution == "CentOS"
  
  - name: start and enable apache
    tags: apache,centos,httpd
    service:
-     name: "Template:Apache service"
+     name: "{{ apache_service }}"
      state: started
      enabled: yes
  
@@ -19,10 +19,10 @@
    lineinfile:
      path: /etc/httpd/conf/httpd.conf
      regexp: '^ServerAdmin'
-     line: ServerAdmin somebody@somewhere.net
+     line: ServerAdmin theslogan@hotmail.com
    when: ansible_distribution == "CentOS"
    notify: restart_apache
- 
+   
  - name: copy html file for site
    tags: apache,apache,apache2,httpd
    copy:
